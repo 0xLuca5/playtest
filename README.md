@@ -27,37 +27,13 @@ This project focuses on a **Skills-based agent architecture**: prompts and tool 
 
 ## What you can build with Playtest
 
-- **Test case authoring**: create/update test cases with structured tool calls.
-- **Automation workflows**: generate automation configs and execute test automation.
-- **Artifacts**: create documents (text/code/sheet/midscene report, etc.) with streaming previews.
-- **Knowledge integration**: read/search Confluence pages (optional).
+- **Test Authoring**: Using natural language to create test cases, generate test data, generate automated test scripts, and run automated tests.
+- **Visual Testing**: Using AI visualization capabilities for automated testing can extend the available cycle of automated testing
+- **Workflow Integration**: AI Agent workflow optimizes the testing process and integrates third-party services such as GitLab, Jira, and Squash.
+- **Test Optimization**: The platform provides transformation functionality and utilizes Agent capabilities to batch optimize historical test cases
 
-## Key concepts
 
-### Skills
 
-Skills are self-contained capabilities described by a `SKILL.md` + optional prompts/references.
-
-- **Location**: `.agents/skills/<skill-name>/`
-- **Metadata**: `SKILL.md` frontmatter includes `name`, `description`, and optional `tools`.
-- **Tool activation**: `tools.json` can override the active tools list (preferred).
-
-At runtime, the orchestrator injects the available skills list into the system prompt and provides a `loadSkill` tool to load specialized instructions.
-
-### Tools
-
-Tools are implemented in TypeScript (e.g. `lib/ai/tools/*`) and registered in `lib/ai/tools/tool-config.ts`.
-
-Examples:
-
-- `createDocument` / `updateDocument`
-- `createTestCase` / `updateTestCase`
-- `executeTestCaseAutomation`
-- `getConfluencePage` / `searchConfluencePages` (optional)
-
-### Artifacts
-
-Artifacts are streamed “documents” with dedicated handlers (see `artifacts/*/server.ts`). They support real-time updates through the AI SDK data stream.
 
 ## Quick start
 
