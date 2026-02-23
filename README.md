@@ -10,6 +10,7 @@
 
 [![Demo video](https://img.youtube.com/vi/X69ADkzYytA/maxresdefault.jpg)](https://youtu.be/X69ADkzYytA)
 
+[Demo video (YouTube)](https://youtu.be/X69ADkzYytA)
 
 Playtest is an **AI-powered test automation workspace** built on **AI SDK**.
 
