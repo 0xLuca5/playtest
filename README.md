@@ -110,21 +110,6 @@ npm run dev
 
 Open `http://localhost:3000`.
 
-## Docker
-
-- **Development**
-
-```bash
-./devops/docker-helper.bat dev
-```
-
-- **Production**
-
-```bash
-./devops/docker-helper.bat prod
-```
-
-See `devops/DOCKER_README.md` for details.
 
 ## Project structure
 
