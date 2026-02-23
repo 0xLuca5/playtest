@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Midscene 自动化测试客户端</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .chat-message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+        .user-message {
+            background-color: #e2f3ff;
+            margin-left: 20px;
+        }
+        .assistant-message {
+            background-color: #f0f0f0;
+            margin-right: 20px;
+        }
+        .typing-indicator {
+            display: inline-block;
+        }
+        .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #666;
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: typing 1s infinite ease-in-out;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center mb-8">Midscene 自动化测试客户端</h1>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div id="chat-container" class="h-96 overflow-y-auto mb-4 p-2 border border-gray-200 rounded">
+                <div class="chat-message assistant-message">
+                    <p>你好！我是Midscene自动化测试助手。我可以帮助你执行网页自动化测试任务。请告诉我你想要测试什么？</p>
+                </div>
+            </div>
+            
+            <div class="flex">
+                <textarea id="user-input" class="flex-grow p-2 border border-gray-300 rounded-l focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="请输入你的测试需求，例如：在百度搜索人工智能并获取搜索结果" rows="3"></textarea>
+                <button id="send-button" class="bg-blue-500 hover:bg-blue-600 text-white px-4 rounded-r">发送</button>
+            </div>
+        </div>
+        
+        <div class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-semibold mb-4">使用指南</h2>
+            <ul class="list-disc pl-5 space-y-2">
+                <li>输入自然语言描述你想要执行的网页自动化测试任务</li>
+                <li>例如："打开百度，搜索人工智能，然后获取前三个搜索结果"</li>
+                <li>或者："访问京东，搜索iPhone，筛选价格在5000-8000元之间的产品，并获取产品名称和价格"</li>
+                <li>系统会将你的请求转换为Midscene可执行的YAML格式，并执行测试</li>
+                <li>执行结果将显示在对话框中</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatContainer = document.getElementById('chat-container');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            
+            // 存储对话历史
+            let messageHistory = [
+                { role: 'system', content: '你是一个专业的网页自动化测试助手，可以帮助用户通过Midscene执行网页自动化测试任务。' },
+                { role: 'assistant', content: '你好！我是Midscene自动化测试助手。我可以帮助你执行网页自动化测试任务。请告诉我你想要测试什么？' }
+            ];
+            
+            // 发送消息
+            async function sendMessage() {
+                const userMessage = userInput.value.trim();
+                if (!userMessage) return;
+                
+                // 清空输入框
+                userInput.value = '';
+                
+                // 添加用户消息到聊天界面
+                addMessageToChat('user', userMessage);
+                
+                // 添加用户消息到历史
+                messageHistory.push({ role: 'user', content: userMessage });
+                
+                // 显示加载指示器
+                const loadingDiv = document.createElement('div');
+                loadingDiv.className = 'chat-message assistant-message';
+                loadingDiv.innerHTML = '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+                chatContainer.appendChild(loadingDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+                
+                try {
+                    // 调用API
+                    const response = await fetch('/api/conversation', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ history: messageHistory })
+                    });
+                    
+                    // 移除加载指示器
+                    chatContainer.removeChild(loadingDiv);
+                    
+                    if (!response.ok) {
+                        throw new Error(`API请求失败: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.success && data.messages && data.messages.length > 0) {
+                        const assistantMessage = data.messages[data.messages.length - 1].content;
+                        
+                        // 添加助手消息到聊天界面
+                        addMessageToChat('assistant', assistantMessage);
+                        
+                        // 更新消息历史
+                        messageHistory = data.messages;
+                    } else {
+                        throw new Error(data.error || '未知错误');
+                    }
+                } catch (error) {
+                    console.error('API调用错误:', error);
+                    addMessageToChat('assistant', `抱歉，发生了错误: ${error.message}`);
+                }
+            }
+            
+            // 添加消息到聊天界面
+            function addMessageToChat(role, content) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chat-message ${role === 'user' ? 'user-message' : 'assistant-message'}`;
+                
+                // 处理换行
+                const formattedContent = content.replace(/\n/g, '<br>');
+                messageDiv.innerHTML = `<p>${formattedContent}</p>`;
+                
+                chatContainer.appendChild(messageDiv);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            // 事件监听
+            sendButton.addEventListener('click', sendMessage);
+            userInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

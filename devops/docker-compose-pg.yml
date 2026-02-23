@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  app:
+    image: ai-run-nextjs:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - DB_PROVIDER=postgres
+      - POSTGRES_URL=postgresql://postgres:ai_run_password@db:5432/ai_run_db
+      - NEXTAUTH_URL=http://119.91.43.229:3000
+      - NEXTAUTH_SECRET=ai-run-production-secret-key-2025-very-secure-random-string-12345
+      - OPENAI_BASE_URL=
+      - OPENAI_API_KEY=
+      - DASHSCOPE_API_KEY=
+      - DASHSCOPE_BASE_URL=
+      - DASHSCOPE_MODEL_NAME=
+      - MIDSCENE_MODEL_NAME=
+      - MIDSCENE_USE_QWEN_VL=1
+      - MIDSCENE_BASE_URL=
+      - MIDSCENE_API_KEY=
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    depends_on:
+      - db
+    networks:
+      - ai-run-network
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=ai_run_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --lc-collate=C --lc-ctype=C
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres-init:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - ai-run-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ai_run_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  ai-run-network:
+    driver: bridge

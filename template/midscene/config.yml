@@ -1,0 +1,29 @@
+# Midscene batch execution configuration for {{testCaseName}}
+# Generated on {{date}} for test case: {{testCaseId}}
+# Description: {{testCaseDescription}}
+
+# Concurrency settings (default: 1 for sequential execution)
+concurrent: 2
+
+# Continue execution even if one file fails (default: false)
+continueOnError: false
+
+# Summary output file
+summary: "./midscene_run/output/custom-summary.json"
+
+# Global web environment configuration (applied to all files)
+web:
+  # All individual YAML files will inherit these settings
+  viewportWidth: 1280
+  viewportHeight: 720
+  # bridgeMode: "newTabWithUrl"
+  # Output directory for individual files (will be combined with file-specific paths)
+
+# Global android environment configuration (if needed)
+# android:
+#   deviceId: "emulator-5554"
+
+# Execution order using glob patterns
+files:
+  - "midscene-scripts/{{testCaseFileName}}.yaml"
+  - "midscene-scripts/*.yaml"

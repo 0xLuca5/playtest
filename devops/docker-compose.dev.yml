@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  # Next.js 开发环境
+  app:
+    build:
+      context: ..
+      dockerfile: devops/Dockerfile.dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_TELEMETRY_DISABLED=1
+      - DB_PROVIDER=sqlite
+      - DATABASE_URL=file:./data.db
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=dev-secret-key
+    volumes:
+      - ..:/app
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
+    command: npm run dev
+
+  # PostgreSQL 数据库服务 (可选)
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=ai_run_dev
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # Redis 缓存服务 (可选)
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_dev_data:/data
+    restart: unless-stopped
+
+volumes:
+  postgres_dev_data:
+  redis_dev_data: 

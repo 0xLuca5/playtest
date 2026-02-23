@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    image: ai-run-nextjs:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_TELEMETRY_DISABLED=1
+      - DB_PROVIDER=sqlite
+      - DATABASE_URL=file:./data/data.db
+      - NEXTAUTH_URL=http://localhost:3000
+      - NEXTAUTH_SECRET=your-secret-key-here-change-this
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    # 使用 entrypoint 确保目录存在
+    entrypoint: ["/app/entrypoint.sh"]
+    command: ["/app/start.sh"] 

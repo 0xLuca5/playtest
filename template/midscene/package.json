@@ -1,0 +1,17 @@
+{
+  "name": "{{testCaseName}}-automation",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Midscene automation test for {{testCaseName}} ({{testCaseId}})",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "midscene ./midscene-scripts",
+    "test:config": "midscene --config config.yml"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@midscene/cli": "latest"
+  }
+}

@@ -1,0 +1,67 @@
+.minimal-tiptap-editor .ProseMirror .heading-node {
+  @apply relative font-semibold;
+}
+
+.minimal-tiptap-editor .ProseMirror .heading-node:first-child {
+  @apply mt-0;
+}
+
+.minimal-tiptap-editor .ProseMirror h1,
+.minimal-tiptap-editor .ProseMirror h1.heading-node {
+  font-size: 1.875rem !important; /* 30px */
+  font-weight: 700 !important;
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.75rem;
+}
+
+.minimal-tiptap-editor .ProseMirror h2,
+.minimal-tiptap-editor .ProseMirror h2.heading-node {
+  font-size: 1.5rem !important; /* 24px */
+  font-weight: 700 !important;
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.875rem !important;
+  line-height: 1.75rem;
+}
+
+.minimal-tiptap-editor .ProseMirror h3,
+.minimal-tiptap-editor .ProseMirror h3.heading-node {
+  font-size: 1.25rem !important; /* 20px */
+  font-weight: 600 !important;
+  margin-top: 1.25rem !important;
+  margin-bottom: 0.75rem !important;
+  line-height: 1.5rem;
+}
+
+.minimal-tiptap-editor .ProseMirror h4,
+.minimal-tiptap-editor .ProseMirror h4.heading-node {
+  font-size: 1.125rem !important; /* 18px */
+  font-weight: 600 !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+  line-height: 1.5rem;
+}
+
+.minimal-tiptap-editor .ProseMirror h5,
+.minimal-tiptap-editor .ProseMirror h5.heading-node {
+  font-size: 1rem !important; /* 16px */
+  font-weight: 600 !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.minimal-tiptap-editor .ProseMirror h6,
+.minimal-tiptap-editor .ProseMirror h6.heading-node {
+  font-size: 0.875rem !important; /* 14px */
+  font-weight: 600 !important;
+  margin-top: 1rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.minimal-tiptap-editor .ProseMirror a.link {
+  @apply text-primary underline;
+}
+
+.minimal-tiptap-editor .ProseMirror a.link:hover {
+  @apply underline;
+}
