@@ -8,8 +8,9 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![Docker](https://img.shields.io/badge/Docker-supported-blue?style=for-the-badge&logo=docker)
 
-<video src="public/video.mp4" controls muted playsinline style="max-width: 100%;"></video>
-[Demo video](public/video.mp4)
+https://github.com/user-attachments/assets/f23c588c-9855-4cb1-a0f9-7cc9a9dc4ce3
+
+[Demo video](https://github.com/user-attachments/assets/f23c588c-9855-4cb1-a0f9-7cc9a9dc4ce3)
 
 Playtest is an **AI-powered test automation workspace** built on **AI SDK**.
 
