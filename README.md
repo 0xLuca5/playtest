@@ -8,6 +8,9 @@
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)
 ![Docker](https://img.shields.io/badge/Docker-supported-blue?style=for-the-badge&logo=docker)
 
+<video src="public/video.mp4" controls muted playsinline style="max-width: 100%;"></video>
+[Demo video](public/video.mp4)
+
 Playtest is an **AI-powered test automation workspace** built on **AI SDK**.
 
 It helps teams move from *requirements* to *test cases* to *automation execution* using an agent that can call structured tools and stream results into interactive documents.
