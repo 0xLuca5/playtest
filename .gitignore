@@ -52,6 +52,7 @@ log/
 
 sqlite.db
 data/
+!data/README.md
 
 public/screenshots
 public/output

@@ -99,13 +99,7 @@ Notes:
 - `CONFLUENCE_API_TOKEN` is only required for private pages or external/share links.
 - Never commit `.env.local`.
 
-### 3) Initialize database
-
-```bash
-npm run db:migrate
-```
-
-### 4) Run dev server
+### 3) Run dev server
 
 ```bash
 npm run dev
@@ -163,9 +157,6 @@ See `devops/DOCKER_README.md` for details.
 
 ```bash
 npm run dev
-npm run lint
-npm run db:generate
-npm run db:migrate
 ```
 
 ### Adding a new skill

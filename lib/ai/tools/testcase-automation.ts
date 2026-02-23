@@ -280,8 +280,8 @@ const processLogJsonAndUpdateSteps = async (testCaseId: string, logJsonPath: str
 
           if (isValidBase64) {
             // 完全替换notes内容，不保留任何旧内容
-            stepNotes = '## 🤖 自动化测试结果\n\n';
-
+            stepNotes = '## Result\n\n';
+a
             // 确保base64数据格式正确
             let base64Data = screenshot.startsWith('data:')
               ? screenshot
@@ -309,12 +309,12 @@ const processLogJsonAndUpdateSteps = async (testCaseId: string, logJsonPath: str
               isString: typeof screenshot === 'string'
             });
             // 即使截图无效，也要清空旧的notes
-            stepNotes = '## 🤖 自动化测试结果\n\n❌ 截图数据无效\n';
+            stepNotes = '## Result\n\n❌ 截图数据无效\n';
           }
         } else {
           console.log(`步骤 ${stepNumber} 未找到截图数据`);
           // 如果没有截图，显示调试信息
-          stepNotes = `## 🤖 自动化测试结果\n\n❌ 未找到截图\n\n**调试信息**:\n- 匹配的执行记录: ${targetExecution?.name || '无'}\n- 执行记录任务数: ${targetExecution?.tasks?.length || 0}\n- assertion: ${targetExecution?.assertion || '无'}\n`;
+          stepNotes = `## Result \n\n❌ 未找到截图\n\n**调试信息**:\n- 匹配的执行记录: ${targetExecution?.name || '无'}\n- 执行记录任务数: ${targetExecution?.tasks?.length || 0}\n- assertion: ${targetExecution?.assertion || '无'}\n`;
         }
       } else {
         // 如果没有找到匹配的execution，保持原有的notes不变
